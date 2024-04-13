@@ -1,7 +1,16 @@
 package global;
 
+import com.jme3.math.Matrix3f;
+import com.jme3.math.Vector3f;
+import p01start.Quad;
+import transforms.*;
+import transforms.Mat3;
+import transforms.Mat3RotX;
+import transforms.Mat3RotY;
+import transforms.Mat3RotZ;
 import transforms.Vec3D;
 
+import java.util.List;
 import java.util.Locale;
 
 import static global.GluUtils.gluLookAt;
@@ -13,6 +22,14 @@ public class GLCamera {
 	private boolean first_person, valid; // true -> 1st person, 0 -> 3rd person
 
 	private Vec3D eye, eye_vector, up, pos, centre;
+
+	public enum CollisionDirection{
+		NONE,
+		LEFT,
+		RIGHT,
+		FORWARD,
+		BACK
+	}
 
 	private void compute_matrix() {
 		eye_vector = new Vec3D(
@@ -37,7 +54,7 @@ public class GLCamera {
 
 	public GLCamera() {
 		azimuth = zenith = 0.0f;
-		radius = 1.0f;
+		radius = 0.5f;
 		pos = new Vec3D(0.0f, 0.0f, 0.0f);
 		first_person = true;
 		valid = false;
@@ -118,6 +135,33 @@ public class GLCamera {
 		valid = false;
 	}
 
+	public Vec3D calculateForward(double speed){
+		Vec3D calcPosition = new Vec3D(pos);
+		double azimuthInRadians = Math.toRadians(azimuth);
+		double zenithInRadians = Math.toRadians(zenith);
+		return new Vec3D(calcPosition.add(new Vec3D(
+				Math.sin(azimuthInRadians) * Math.cos(zenithInRadians),
+				Math.sin(zenithInRadians),
+				-Math.cos(azimuthInRadians) * Math.cos(zenithInRadians))
+				.mul(speed)));
+	}
+
+	public Vec3D calculateBackward(double speed){
+		return calculateForward((-1) * speed);
+	}
+
+	public Vec3D calculateRight(double speed){
+		Vec3D calcPosition = new Vec3D(pos);
+		return new Vec3D(calcPosition.add(new Vec3D(
+				-Math.sin(azimuth - Math.PI / 2),
+				0.0f,
+				+Math.cos(azimuth - Math.PI / 2))
+				.mul(speed)));
+	}
+
+	public Vec3D calculateLeft(double speed){
+		return new Vec3D(calculateRight(-(1) * speed));
+	}
 	public void left(double speed) {
 		right((-1) * speed);
 	}
@@ -200,6 +244,88 @@ public class GLCamera {
 		);
 	}
 
+	public boolean collidesWithQuad(List<Quad> vertices, GLCamera camera, CollisionDirection direction){
+		float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE, minZ = Float.MAX_VALUE;
+		float maxX = -Float.MAX_VALUE, maxY = -Float.MAX_VALUE, maxZ = -Float.MAX_VALUE;
+		boolean isColliding = false;
+		for (Quad q : vertices) {
+			for (Vec3D vertex : q.vertexes) {
+				Mat3 rot = calculateTheRotationMatrix(q.rotation,q.angleOfRotation);
+				if(rot != null) {
+					vertex = new Vec3D(vertex.mul(rot));
+				}
+				vertex = new Vec3D(vertex.add(q.translation));
+				minX = (float) Math.min(minX, vertex.getX());
+				minY = (float) Math.min(minY, vertex.getY());
+				minZ = (float) Math.min(minZ, vertex.getZ());
+				maxX = (float) Math.max(maxX, vertex.getX());
+				maxY = (float) Math.max(maxY, vertex.getY());
+				maxZ = (float) Math.max(maxZ, vertex.getZ());
+			}
+				isColliding = (Math.abs(camera.getPosition().getX() - (minX + maxX) / 2) * 2 < (camera.getRadius() + (maxX - minX) / 2)) &&
+					(Math.abs(camera.getPosition().getY() - (minY + maxY) / 2) * 2 < (camera.getRadius() + (maxY - minY) / 2)) &&
+					(Math.abs(camera.getPosition().getZ() - (minZ + maxZ) / 2) * 2 < (camera.getRadius() + (maxZ - minZ) / 2));
+
+		}
+
+		if(isColliding == false){
+			return false;
+		}
+
+		return true;
+		/*Vec3D prevPosition = new Vec3D(camera.getPosition());
+		Vec3D newPosition = new Vec3D();
+			switch (direction) {
+				case FORWARD:
+					newPosition = calculateForward(0.25f);
+					break;
+				case BACK:
+					newPosition = calculateBackward(0.25f);
+					break;
+				case RIGHT:
+					newPosition = calculateRight(0.25f);
+					break;
+				case LEFT:
+					newPosition = calculateLeft(0.25f);
+					break;
+			}
+
+			CollisionDirection collidedDirection = CollisionDirection.NONE;
+
+			if (prevPosition.getX() < newPosition.getX()) {
+				collidedDirection = CollisionDirection.LEFT;
+			} else if (prevPosition.getX() > newPosition.getX()) {
+				collidedDirection = CollisionDirection.RIGHT;
+			} else if (prevPosition.getZ() < newPosition.getZ()) {
+				collidedDirection = CollisionDirection.BACK;
+			} else if (prevPosition.getZ() > newPosition.getZ()) {
+				collidedDirection = CollisionDirection.FORWARD;
+			}
+		System.out.println(collidedDirection);
+		System.out.println(isColliding);
+		System.out.println(direction);
+		return collidedDirection == direction;*/
+	}
+	private Mat3 calculateTheRotationMatrix(Vec3D rot, int angle){
+		float angleRadians = (float) Math.toRadians(angle);
+
+		if(rot.getX() >= 1){
+			Mat3RotX rotX = new Mat3RotX(angleRadians);
+			Mat3 rotationMatrix = new Mat3(rotX);
+			return rotationMatrix;
+		}
+		else if(rot.getY() >=1){
+			Mat3RotY rotY = new Mat3RotY(angleRadians);
+			Mat3 rotationMatrix = new Mat3(rotY);
+			return rotationMatrix;
+		}
+		else if(rot.getZ() >= 1){
+			Mat3RotZ rotZ = new Mat3RotZ(angleRadians);
+			Mat3 rotationMatrix = new Mat3(rotZ);
+			return rotationMatrix;
+		}
+		return null;
+	}
 	public String toString() {
 		return toString("%4.2f");
 	}

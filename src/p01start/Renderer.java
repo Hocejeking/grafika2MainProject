@@ -1,10 +1,5 @@
 package p01start;
 
-import com.jme3.bullet.PhysicsSpace;
-import com.jme3.bullet.collision.shapes.Box2dShape;
-import com.jme3.bullet.objects.PhysicsRigidBody;
-import com.jme3.math.Vector3f;
-import com.jme3.system.NativeLibraryLoader;
 import global.AbstractRenderer;
 import global.GLCamera;
 import lwjglutils.OGLTexture2D;
@@ -13,7 +8,9 @@ import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWScrollCallback;
+import transforms.Vec3D;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.DoubleBuffer;
 import java.util.ArrayList;
@@ -32,7 +29,6 @@ import static org.lwjgl.opengl.GL33.*;
  */
 public class Renderer extends AbstractRenderer {
     private float dx, dy, ox, oy;
-    private PhysicsSpace physicsSpace;
     private final float offset = 25f;
 
     private double ex, ey, ez;
@@ -40,23 +36,31 @@ public class Renderer extends AbstractRenderer {
 
     private float trans, deltaTrans = 0;
     private final MapFactory mapFactory = new MapFactory(100,50,1f);
+    private long timer = System.nanoTime() + (15 * 1_000_000_000L);;
     private SkyBox skybox;
 
     private boolean per = true, move = false;
-    private static float speed = 0.05f;
+    private static float speed = 0.2f;
     private int cameraMode, lastCameraMode = -1;
-    private List<Vector3f> wallList = new ArrayList<>();
-
+    private List<Quad> wallList = new ArrayList<>();
+    private List<Quad> floorList = new ArrayList<>();
+    private List<Quad> doorList = new ArrayList<>();
     private OGLTexture2D texture;
     private OGLTexture2D gun;
+    private OGLTexture2D floor;
+    private OGLTexture2D door;
+    private OGLTexture2D enemyTex;
+    private OGLTexture2D enemyNormal;
     private OGLTexture2D.Viewer textureViewer;
+    private OBJLoader objLoader = new OBJLoader();
+    private Obj enemyOBJ = new Obj();
+    private Enemy enemy;
     private GLCamera camera;
+    private boolean shouldDrawShot = false;
+    private boolean debugInfo = false;
 
     public Renderer() {
         super();
-        /*used default glfwWindowSizeCallback see AbstractRenderer*/
-        NativeLibraryLoader.loadLibbulletjme(true, null, "Debug", "Sp");
-
         glfwKeyCallback = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
@@ -64,51 +68,50 @@ public class Renderer extends AbstractRenderer {
                     // We will detect this in our rendering loop
                     glfwSetWindowShouldClose(window, true);
                 if (action == GLFW_RELEASE) {
-                    trans = 0;
-                    deltaTrans = 0;
-                }
 
-                if (action == GLFW_PRESS) {
+                }
                     switch (key) {
-                        case GLFW_KEY_P:
-                            per = !per;
-                            break;
-                        case GLFW_KEY_M:
-                            move = !move;
-                            break;
-                        case GLFW_KEY_C:
-                            cameraMode++;
-                            break;
-                        case GLFW_KEY_LEFT_SHIFT:
-                        case GLFW_KEY_LEFT_CONTROL:
-                        case GLFW_KEY_W:
-                        case GLFW_KEY_S:
-                        case GLFW_KEY_A:
-                        case GLFW_KEY_D:
-                            deltaTrans = 0.001f;
-                            break;
-                    }
-                }
-                switch (key) {
-                    case GLFW_KEY_W:
-                        camera.forward(speed);
-                        break;
-                    case GLFW_KEY_S:
-                        camera.backward(speed);
-                        break;
-                    case GLFW_KEY_A:
-                        camera.left(speed);
-                        break;
-                    case GLFW_KEY_D:
-                        camera.right(speed);
-                        break;
-                }
+                            case GLFW_KEY_W:
+                                if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.FORWARD)){
+                                    camera.backward(0.3f);
+                                    break;
+                                }
+                                camera.forward(speed);
+                                break;
+                            case GLFW_KEY_S:
+                                if(camera.collidesWithQuad(wallList,camera,GLCamera.CollisionDirection.BACK)){
+                                    camera.forward(0.3f);
+                                    break;
+                                }
+                                camera.backward(speed);
+                                break;
+                            case GLFW_KEY_A:
+                                if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.LEFT)){
+                                    camera.right(0.3f);
+                                    break;
+                                }
+                                camera.left(speed);
+                                break;
+                            case GLFW_KEY_D:
+                                if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.RIGHT)){
+                                    camera.left(0.3f);
+                                    break;
+                                }
+                                camera.right(speed);
+                                break;
+                            case GLFW_KEY_E:
+                                translateDoor();
+                                break;
+                            case GLFW_KEY_F1:
+                                System.out.println("dbg");
+                                debugInfo = !debugInfo;
+                                break;
 
-            }
+                        }
+                    }
         };
 
         glfwMouseButtonCallback = new GLFWMouseButtonCallback() {
-
             @Override
             public void invoke(long window, int button, int action, int mods) {
                 DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
@@ -117,8 +120,9 @@ public class Renderer extends AbstractRenderer {
                 double x = xBuffer.get(0);
                 double y = yBuffer.get(0);
 
-
                 if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
+                    Vec3D forwardDirectionVector = new Vec3D(camera.calculateForward(150));
+                    enemy.killAndGenerateEnemy(camera);
                     ox = (float) x;
                     oy = (float) y;
                 }
@@ -142,7 +146,7 @@ public class Renderer extends AbstractRenderer {
                     azimut += dx / height * 180;
                     azimut = azimut % 360;
                     camera.setAzimuth(Math.toRadians(azimut));
-                    camera.setZenith(Math.toRadians(zenit));
+                    //camera.setZenith(Math.toRadians(zenit));
                     dx = 0;
                     dy = 0;
             }
@@ -151,7 +155,7 @@ public class Renderer extends AbstractRenderer {
         glfwScrollCallback = new GLFWScrollCallback() {
             @Override
             public void invoke(long window, double dx, double dy) {
-                //do nothing
+
             }
         };
     }
@@ -160,7 +164,15 @@ public class Renderer extends AbstractRenderer {
     public void init() {
         super.init();
         wallList = mapFactory.generateMaze();
-        physicsSpace = new PhysicsSpace(PhysicsSpace.BroadphaseType.DBVT);
+        floorList = mapFactory.generateFloor();
+        doorList = mapFactory.generateDoors();
+        try {
+            System.out.println("Loading");
+            enemyOBJ = objLoader.loadModel(new File("src/models/swampGhoul.obj"));
+            enemy = new Enemy(enemyOBJ, new Vec3D(0,0,0));
+        }catch (IOException e){
+            System.out.println(e);
+        }
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         textureViewer = new OGLTexture2D.Viewer();
         glEnable(GL_DEPTH_TEST);
@@ -176,6 +188,9 @@ public class Renderer extends AbstractRenderer {
             OGLTexture2D[] textureCube = new OGLTexture2D[6];
             texture = new OGLTexture2D("textures/wall.jpg");
             gun = new OGLTexture2D("textures/gun.gif");
+            floor = new OGLTexture2D("textures/floor.jpg");
+            door = new OGLTexture2D("textures/door.jfif");
+            enemyTex = new OGLTexture2D("textures/swampGhoul_diffuse.png");
             textureCube[0] = new OGLTexture2D("textures/skybox/yellowcloud_ft.jpg");
             textureCube[2] = new OGLTexture2D("textures/skybox/yellowcloud_bk.jpg");
             textureCube[4] = new OGLTexture2D("textures/skybox/yellowcloud_up.jpg");
@@ -195,6 +210,8 @@ public class Renderer extends AbstractRenderer {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
         camera = new GLCamera();
+        camera.setRadius(0.5f);
+        camera.setPosition(new Vec3D(1,0,1));
     }
 
     private void drawScene() {
@@ -202,15 +219,17 @@ public class Renderer extends AbstractRenderer {
         glLoadIdentity();
 
         glMatrixMode(GL_MODELVIEW);
-
+        enemyTex.bind();
+        objLoader.render(enemyOBJ,enemy.pos);
         glEnable(GL_TEXTURE_2D);
         glDisable(GL_LIGHTING);
         glActiveTexture(GL_TEXTURE0);
         texture.bind();
-
-        glBegin(GL_QUADS);
         drawMaze(wallList);
-        glEnd();
+        floor.bind();
+        drawFloor(floorList);
+        door.bind();
+        drawDoors(doorList);
         drawSkyBox();
         drawGun();
     }
@@ -272,7 +291,6 @@ public class Renderer extends AbstractRenderer {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-
         glOrtho(0, width, 0, height, -1, 1);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -296,19 +314,82 @@ public class Renderer extends AbstractRenderer {
         glEnable(GL_DEPTH_TEST);
     }
 
-    private void drawMaze(List<Vector3f> wallPositions) {
-        glColor3f(1.0f, 1.0f, 1.0f);
-        for (Vector3f position : wallPositions) {
-            // Draw a quad at each wall position
-            glTexCoord2f(0.0f, 0.0f);
-            glVertex3f(position.x, position.y, position.z);
-            glTexCoord2f(1.0f, 0.0f);
-            glVertex3f(position.x + mapFactory.getWALL_SIZE(), position.y, position.z);
-            glTexCoord2f(1.0f, 1.0f);
-            glVertex3f(position.x + mapFactory.getWALL_SIZE(), position.y + mapFactory.getWALL_SIZE(), position.z);
+    private void drawDoors(List<Quad> doorPositions){
+        for(Quad q : doorPositions){
+            glPushMatrix();
+            glTranslated(q.translation.getX(),q.translation.getY(),q.translation.getZ());
+            glRotated(q.angleOfRotation,q.rotation.getX(),q.rotation.getY(),q.rotation.getZ());
+            glBegin(GL_QUADS);
+            Vec3D v1 = q.vertexes.get(0);
+            Vec3D v2 = q.vertexes.get(1);
+            Vec3D v3 = q.vertexes.get(2);
+            Vec3D v4 = q.vertexes.get(3);
+
+            glTexCoord2f(0f, 0f);
+            glVertex3d(v1.getX(), v1.getY(), v1.getZ());
+            glTexCoord2f(1f, 0f);
+            glVertex3d(v2.getX(), v2.getY(), v2.getZ());
+            glTexCoord2f(1f, 1f);
+            glVertex3d(v3.getX(), v3.getY(), v3.getZ());
             glTexCoord2f(0.0f, 1.0f);
-            glVertex3f(position.x, position.y + mapFactory.getWALL_SIZE(), position.z);
+            glVertex3d(v4.getX(), v4.getY(), v4.getZ());
+            glEnd();
+            glPopMatrix();
         }
+    }
+
+    private void drawMaze(List<Quad> wallPositions) {
+        for (Quad q: wallPositions ) {
+            glPushMatrix();
+            glTranslated(q.translation.getX(),q.translation.getY(),q.translation.getZ());
+            glRotated(q.angleOfRotation, q.rotation.getX(), q.rotation.getY(), q.rotation.getZ());
+            glBegin(GL_QUADS);
+            Vec3D v1 = q.vertexes.get(0);
+            Vec3D v2 = q.vertexes.get(1);
+            Vec3D v3 = q.vertexes.get(2);
+            Vec3D v4 = q.vertexes.get(3);
+
+            glTexCoord2f(0f, 0f);
+            glVertex3d(v1.getX(), v1.getY(), v1.getZ());
+            glTexCoord2f(1f, 0f);
+            glVertex3d(v2.getX(), v2.getY(), v2.getZ());
+            glTexCoord2f(1f, 1f);
+            glVertex3d(v3.getX(), v3.getY(), v3.getZ());
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3d(v4.getX(), v4.getY(), v4.getZ());
+            glEnd();
+            glPopMatrix();
+        }
+
+    }
+
+    private void drawFloor(List<Quad> floorList){
+        glPushMatrix();
+        glRotatef(90, 01, 0, 0);
+        glTranslatef(0,0,1f);
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glBegin(GL_QUADS);
+        for (Quad q: floorList ) {
+            Vec3D v1 = q.vertexes.get(0);
+            Vec3D v2 = q.vertexes.get(1);
+            Vec3D v3 = q.vertexes.get(2);
+            Vec3D v4 = q.vertexes.get(3);
+
+            glTexCoord2f(0f, 0f);
+            glVertex3d(v1.getX(), v1.getY(), v1.getZ());
+            glTexCoord2f(1f, 0f);
+            glVertex3d(v2.getX(), v2.getY(), v2.getZ());
+            glTexCoord2f(1f, 1f);
+            glVertex3d(v3.getX(), v3.getY(), v3.getZ());
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3d(v4.getX(), v4.getY(), v4.getZ());
+        }
+        glEnd();
+        glPopMatrix();
+    }
+
+    private void translateDoor(){
+
     }
 
 
@@ -325,9 +406,6 @@ public class Renderer extends AbstractRenderer {
         ex = Math.sin(a_rad) * Math.cos(z_rad);
         ey = Math.sin(z_rad);
         ez = -Math.cos(a_rad) * Math.cos(z_rad);
-        double ux = Math.sin(a_rad) * Math.cos(z_rad + Math.PI / 2);
-        double uy = Math.sin(z_rad + Math.PI / 2);
-        double uz = -Math.cos(a_rad) * Math.cos(z_rad + Math.PI / 2);
 
 
         glMatrixMode(GL_MODELVIEW);
@@ -348,6 +426,26 @@ public class Renderer extends AbstractRenderer {
         glPushMatrix();
         drawScene();
         glPopMatrix();
+        if(debugInfo) {
+            textRenderer.addStr2D(3, 20, camera.getPosition().toString());
+            textRenderer.addStr2D(3, 40, String.format(" azimuth %3.1f, zenith %3.1f", azimut, zenit));
+            textRenderer.addStr2D(3, 60, "Number of quads in the scene: " + (wallList.toArray().length + floorList.toArray().length + doorList.toArray().length));
+            textRenderer.addStr2D(3, 80, "Number of triangles in the scene: " + (enemy.object.getFaces().size()));
+        }
+
+        long currentTime = System.nanoTime();
+        long elapsedTime = (currentTime - timer) / 1_000_000_000;
+        long timeRemaining = Math.max(0, 30 - elapsedTime);
+        long minutes = timeRemaining / 60;
+        long seconds = timeRemaining % 60;
+        seconds /=  2;
+        if(seconds <= 0){
+            textRenderer.setScale(3d);
+            textRenderer.addStr2D(height/2,width/2, "YOU LOST!");
+            textRenderer.setScale(1d);
+        }
+        textRenderer.addStr2D(3,100, "time: " + String.format("%02d:%02d", minutes,seconds));
+        textRenderer.draw();
     }
 
 }
