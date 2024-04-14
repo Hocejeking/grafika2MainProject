@@ -33,7 +33,7 @@ public class Renderer extends AbstractRenderer {
 
     private double ex, ey, ez;
     private float zenit, azimut;
-
+    private int score = 0;
     private float trans, deltaTrans = 0;
     private final MapFactory mapFactory = new MapFactory(100,50,1f);
     private long timer = System.nanoTime() + (15 * 1_000_000_000L);;
@@ -50,81 +50,86 @@ public class Renderer extends AbstractRenderer {
     private OGLTexture2D floor;
     private OGLTexture2D door;
     private OGLTexture2D enemyTex;
-    private OGLTexture2D enemyNormal;
     private OGLTexture2D.Viewer textureViewer;
     private OBJLoader objLoader = new OBJLoader();
     private Obj enemyOBJ = new Obj();
     private Enemy enemy;
     private GLCamera camera;
-    private boolean shouldDrawShot = false;
     private boolean debugInfo = false;
+
+    private boolean noTimeLeft = false;
 
     public Renderer() {
         super();
         glfwKeyCallback = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
-                if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-                    // We will detect this in our rendering loop
-                    glfwSetWindowShouldClose(window, true);
-                if (action == GLFW_RELEASE) {
-
-                }
+                if(!noTimeLeft) {
                     switch (key) {
-                            case GLFW_KEY_W:
-                                if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.FORWARD)){
-                                    camera.backward(0.3f);
-                                    break;
-                                }
-                                camera.forward(speed);
+                        case GLFW_KEY_W:
+                            if (camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.FORWARD)) {
+                                camera.backward(0.3f);
                                 break;
-                            case GLFW_KEY_S:
-                                if(camera.collidesWithQuad(wallList,camera,GLCamera.CollisionDirection.BACK)){
-                                    camera.forward(0.3f);
-                                    break;
-                                }
-                                camera.backward(speed);
+                            }
+                            camera.forward(speed);
+                            break;
+                        case GLFW_KEY_S:
+                            if (camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.BACK)) {
+                                camera.forward(0.3f);
                                 break;
-                            case GLFW_KEY_A:
-                                if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.LEFT)){
-                                    camera.right(0.3f);
-                                    break;
-                                }
-                                camera.left(speed);
+                            }
+                            camera.backward(speed);
+                            break;
+                        case GLFW_KEY_A:
+                            if (camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.LEFT)) {
+                                camera.right(0.3f);
                                 break;
-                            case GLFW_KEY_D:
-                                if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.RIGHT)){
-                                    camera.left(0.3f);
-                                    break;
-                                }
-                                camera.right(speed);
+                            }
+                            camera.left(speed);
+                            break;
+                        case GLFW_KEY_D:
+                            if (camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.RIGHT)) {
+                                camera.left(0.3f);
                                 break;
-                            case GLFW_KEY_E:
-                                translateDoor();
-                                break;
-                            case GLFW_KEY_F1:
-                                System.out.println("dbg");
-                                debugInfo = !debugInfo;
-                                break;
-
-                        }
+                            }
+                            camera.right(speed);
+                            break;
+                        case GLFW_KEY_E:
+                            translateDoor();
+                            break;
                     }
+                }
+                if(key==GLFW_KEY_R && action == GLFW_PRESS && noTimeLeft){
+                    restart();
+                }
+                if (action == GLFW_PRESS && key == GLFW_KEY_F1) {
+                    System.out.println("dbg");
+                    debugInfo = !debugInfo;
+                }
+                if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                    glfwSetWindowShouldClose(window, true);
+                }
+            }
         };
 
         glfwMouseButtonCallback = new GLFWMouseButtonCallback() {
             @Override
             public void invoke(long window, int button, int action, int mods) {
-                DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
-                DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
-                glfwGetCursorPos(window, xBuffer, yBuffer);
-                double x = xBuffer.get(0);
-                double y = yBuffer.get(0);
+                if(!noTimeLeft) {
+                    DoubleBuffer xBuffer = BufferUtils.createDoubleBuffer(1);
+                    DoubleBuffer yBuffer = BufferUtils.createDoubleBuffer(1);
+                    glfwGetCursorPos(window, xBuffer, yBuffer);
+                    double x = xBuffer.get(0);
+                    double y = yBuffer.get(0);
 
-                if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
-                    Vec3D forwardDirectionVector = new Vec3D(camera.calculateForward(150));
-                    enemy.killAndGenerateEnemy(camera);
-                    ox = (float) x;
-                    oy = (float) y;
+                    if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
+                        if(enemy.killAndGenerateEnemy(camera)){
+                            timer = System.nanoTime() + (15 * 1_000_000_000L);
+                            score++;
+                        }
+                        ox = (float) x;
+                        oy = (float) y;
+                    }
                 }
             }
 
@@ -133,6 +138,7 @@ public class Renderer extends AbstractRenderer {
         glfwCursorPosCallback = new GLFWCursorPosCallback() {
             @Override
             public void invoke(long window, double x, double y) {
+                if(!noTimeLeft) {
                     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
                     dx = (float) x - ox;
                     dy = (float) y - oy;
@@ -149,6 +155,7 @@ public class Renderer extends AbstractRenderer {
                     //camera.setZenith(Math.toRadians(zenit));
                     dx = 0;
                     dy = 0;
+                }
             }
         };
 
@@ -297,20 +304,29 @@ public class Renderer extends AbstractRenderer {
 
         gun.bind();
         glDisable(GL_DEPTH_TEST);
-        glEnable(GL_TEXTURE_2D);
-        glBegin(GL_QUADS);
 
-        int gunWidth = 150;
-        int gunHeight = 150;
-        int gunX = (width - gunWidth) / 2;
-        int gunY = 0;
-
-        glTexCoord2f(0, 1); glVertex2f(gunX, gunY);
-        glTexCoord2f(0, 0); glVertex2f(gunX, gunY + gunHeight*2);
-        glTexCoord2f(1, 0); glVertex2f(gunX + gunWidth * 2, gunY + gunHeight *2);
-        glTexCoord2f(1, 1); glVertex2f(gunX + gunWidth*2, gunY);
-
+        glBegin(GL_LINES);
+        glVertex3f(-0.1f, 0.0f, 0.0f);
+        glVertex3f(0.1f, 0.0f, 0.0f);
         glEnd();
+
+        glBegin(GL_LINES);
+        glVertex3f(0.0f, -0.1f, 0.0f);
+        glVertex3f(0.0f, 0.1f, 0.0f);
+        glEnd();
+
+        glEnable(GL_TEXTURE_2D);
+            glBegin(GL_QUADS);
+            int gunWidth = 150;
+            int gunHeight = 150;
+            int gunX = (width - gunWidth) / 2;
+            int gunY = 0;
+            glTexCoord2f(0, 1); glVertex2f(gunX, gunY);
+            glTexCoord2f(0, 0); glVertex2f(gunX, gunY + gunHeight*2);
+            glTexCoord2f(1, 0); glVertex2f(gunX + gunWidth * 2, gunY + gunHeight *2);
+            glTexCoord2f(1, 1); glVertex2f(gunX + gunWidth*2, gunY);
+        glEnd();
+
         glEnable(GL_DEPTH_TEST);
     }
 
@@ -426,13 +442,6 @@ public class Renderer extends AbstractRenderer {
         glPushMatrix();
         drawScene();
         glPopMatrix();
-        if(debugInfo) {
-            textRenderer.addStr2D(3, 20, camera.getPosition().toString());
-            textRenderer.addStr2D(3, 40, String.format(" azimuth %3.1f, zenith %3.1f", azimut, zenit));
-            textRenderer.addStr2D(3, 60, "Number of quads in the scene: " + (wallList.toArray().length + floorList.toArray().length + doorList.toArray().length));
-            textRenderer.addStr2D(3, 80, "Number of triangles in the scene: " + (enemy.object.getFaces().size()));
-        }
-
         long currentTime = System.nanoTime();
         long elapsedTime = (currentTime - timer) / 1_000_000_000;
         long timeRemaining = Math.max(0, 30 - elapsedTime);
@@ -441,11 +450,35 @@ public class Renderer extends AbstractRenderer {
         seconds /=  2;
         if(seconds <= 0){
             textRenderer.setScale(3d);
-            textRenderer.addStr2D(height/2,width/2, "YOU LOST!");
+            textRenderer.addStr2D(height/2 + 60,width/2, "YOU LOST!");
+            textRenderer.addStr2D((height/2) -25,width/2, "Press R to restart");
             textRenderer.setScale(1d);
+            noTimeLeft = true;
         }
-        textRenderer.addStr2D(3,100, "time: " + String.format("%02d:%02d", minutes,seconds));
+
+        if(debugInfo) {
+            textRenderer.addStr2D(3, 20, camera.getPosition().toString());
+            textRenderer.addStr2D(3, 40, String.format(" azimuth %3.1f, zenith %3.1f", azimut, zenit));
+            textRenderer.addStr2D(3, 60, "Number of quads in the scene: " + (wallList.toArray().length + floorList.toArray().length + doorList.toArray().length));
+            textRenderer.addStr2D(3, 80, "Number of triangles in the scene: " + (enemy.object.getFaces().size()));
+            textRenderer.addStr2D(3,100, "time: " + String.format("%02d:%02d", minutes,seconds));
+            textRenderer.addStr2D(3,120,"YOUR SCORE: " + score);
+        }
+        else{
+            textRenderer.addStr2D(3,20, "time: " + String.format("%02d:%02d", minutes,seconds));
+            textRenderer.addStr2D(3,40,"YOUR SCORE: " + score);
+        }
+
+
+
         textRenderer.draw();
+    }
+
+    private void restart(){
+        camera.setPosition(new Vec3D(1,0,1));
+        noTimeLeft = false;
+        timer = System.nanoTime() + (15 * 1_000_000_000L);
+        score = 0;
     }
 
 }

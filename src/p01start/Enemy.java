@@ -1,5 +1,6 @@
 package p01start;
 
+import com.jme3.math.Vector3f;
 import global.GLCamera;
 import transforms.Camera;
 import transforms.Vec3D;
@@ -24,13 +25,20 @@ public class Enemy{
         this.pos = pos;
     }
 
-    public void killAndGenerateEnemy(GLCamera cam){
+    public boolean killAndGenerateEnemy(GLCamera cam){
         Ray ray = new Ray(cam.getPosition(), cam.getEyeVector());
         boolean colCheck = AABB.rayIntersectsAABB(ray,AABB);
         if(colCheck){
             this.pos = generateValue();
+            List<Vector3f> vertsToTranslate = object.getVertices();
+            List<Vector3f> translatedVerts = new ArrayList<>();
+            for (Vector3f vert: vertsToTranslate) {
+               translatedVerts.add(vert.add((float) pos.getX(), (float) pos.getY(), (float) pos.getZ()));
+            }
+            this.AABB = new BoundingBox(translatedVerts);
+            return true;
         }
-        return;
+        return false;
     }
 
     List<Vec3D> availablePositions = new ArrayList<>(Arrays.asList(
