@@ -91,7 +91,7 @@ public class Vec3D {
 
 	/**
 	 * Returns the x coordinate
-	 * 
+	 *
 	 * @return the x
 	 */
 	public double getX() {
@@ -100,7 +100,7 @@ public class Vec3D {
 
 	/**
 	 * Returns the y coordinate
-	 * 
+	 *
 	 * @return the y
 	 */
 	public double getY() {
@@ -109,7 +109,7 @@ public class Vec3D {
 
 	/**
 	 * Returns the z coordinate
-	 * 
+	 *
 	 * @return the z
 	 */
 	public double getZ() {
@@ -158,8 +158,8 @@ public class Vec3D {
 	 * 
 	 * @return new Vec2D instance
 	 */
-	public Vec2D ignoreZ() {
-		return new Vec2D(x, y);
+	public transforms.Vec2D ignoreZ() {
+		return new transforms.Vec2D(x, y);
 	}
 
 	/**

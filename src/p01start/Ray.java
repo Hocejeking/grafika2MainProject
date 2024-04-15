@@ -1,6 +1,5 @@
 package p01start;
 
-import com.jme3.math.Vector3f;
 import transforms.Vec3D;
 
 public class Ray {

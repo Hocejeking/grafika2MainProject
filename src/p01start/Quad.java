@@ -3,8 +3,6 @@ package p01start;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.jme3.math.Vector3f;
-import com.simsilica.mathd.Vec3d;
 import transforms.Vec3D;
 
 public class Quad {

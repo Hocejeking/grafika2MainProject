@@ -1,7 +1,4 @@
 package global;
-
-import com.jme3.math.Matrix3f;
-import com.jme3.math.Vector3f;
 import p01start.Quad;
 import transforms.*;
 import transforms.Mat3;

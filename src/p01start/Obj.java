@@ -4,23 +4,23 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.jme3.math.Vector3f;
 import org.lwjgl.opengl.GL11;
 import transforms.Vec2D;
+import transforms.Vec3D;
 
 import static org.lwjgl.opengl.GL11.GL_FLAT;
 import static org.lwjgl.opengl.GL11.GL_SMOOTH;
 
 public class Obj extends Object {
 
-    private final List<Vector3f> vertices;
+    private final List<Vec3D> vertices;
     private final List<Vec2D> textureCoords;
-    private final List<Vector3f> normals;
+    private final List<Vec3D> normals;
     private final List<Face> faces;
     private boolean enableSmoothShading;
 
-    public Obj(List<Vector3f> vertices, List<Vec2D> textureCoords,
-               List<Vector3f> normals, List<Face> faces, boolean enableSmoothShading) {
+    public Obj(List<Vec3D> vertices, List<Vec2D> textureCoords,
+               List<Vec3D> normals, List<Face> faces, boolean enableSmoothShading) {
         super();
 
         this.vertices = vertices;
@@ -31,8 +31,8 @@ public class Obj extends Object {
     }
 
     public Obj() {
-        this(new ArrayList<Vector3f>(), new ArrayList<Vec2D>(),
-                new ArrayList<Vector3f>(), new ArrayList<Face>(), true);
+        this(new ArrayList<Vec3D>(), new ArrayList<Vec2D>(),
+                new ArrayList<Vec3D>(), new ArrayList<Face>(), true);
     }
 
     public void enableStates() {
@@ -51,7 +51,7 @@ public class Obj extends Object {
         return this.getNormals().size() > 0;
     }
 
-    public List<Vector3f> getVertices() {
+    public List<Vec3D> getVertices() {
         return this.vertices;
     }
 
@@ -59,7 +59,7 @@ public class Obj extends Object {
         return this.textureCoords;
     }
 
-    public List<Vector3f> getNormals() {
+    public List<Vec3D> getNormals() {
         return this.normals;
     }
 

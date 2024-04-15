@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.Optional;
 import java.util.Scanner;
 
-import com.jme3.math.Vector3f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import transforms.Vec2D;
@@ -25,7 +24,7 @@ public class OBJLoader extends Object {
         GL11.glBegin(GL_TRIANGLES);
         {
             for (Obj.Face face : model.getFaces()) {
-                Vector3f[] normals = {
+                Vec3D[] normals = {
                         model.getNormals().get(face.getNormals()[0] - 1),
                         model.getNormals().get(face.getNormals()[1] - 1),
                         model.getNormals().get(face.getNormals()[2] - 1)
@@ -35,20 +34,20 @@ public class OBJLoader extends Object {
                         model.getTextureCoordinates().get(face.getTextureCoords()[1] - 1),
                         model.getTextureCoordinates().get(face.getTextureCoords()[2] - 1)
                 };
-                Vector3f[] vertices = {
+                Vec3D[] vertices = {
                         model.getVertices().get(face.getVertices()[0] - 1),
                         model.getVertices().get(face.getVertices()[1] - 1),
                         model.getVertices().get(face.getVertices()[2] - 1)
                 };
-                    GL11.glNormal3f(normals[0].x, normals[0].y, normals[0].z);
+                    GL11.glNormal3d(normals[0].getX(), normals[0].getY(), normals[0].getZ());
                     GL11.glTexCoord2d(texCoords[0].getX(), texCoords[0].getY());
-                    GL11.glVertex3f(vertices[0].x, vertices[0].y, vertices[0].z);
-                    GL11.glNormal3f(normals[1].x, normals[1].y, normals[1].z);
+                    GL11.glVertex3d(vertices[0].getX(), vertices[0].getY(), vertices[0].getZ());
+                    GL11.glNormal3d(normals[1].getX(), normals[1].getY(), normals[1].getZ());
                     GL11.glTexCoord2d(texCoords[1].getX(),  texCoords[1].getY());
-                    GL11.glVertex3f(vertices[1].x, vertices[1].y, vertices[1].z);
-                    GL11.glNormal3f(normals[2].x, normals[2].y, normals[2].z);
+                    GL11.glVertex3d(vertices[1].getX(), vertices[1].getY(), vertices[1].getZ());
+                    GL11.glNormal3d(normals[2].getX(), normals[2].getY(), normals[2].getZ());
                     GL11.glTexCoord2d( texCoords[2].getX(), texCoords[2].getY());
-                    GL11.glVertex3f(vertices[2].x, vertices[2].y, vertices[2].z);
+                    GL11.glVertex3d(vertices[2].getX(), vertices[2].getY(), vertices[2].getZ());
 
             }
         }
@@ -68,14 +67,14 @@ public class OBJLoader extends Object {
                 String[] split = ln.split("\\s+");
                 switch (split[0]) {
                     case "v":
-                        model.getVertices().add(new Vector3f(
+                        model.getVertices().add(new Vec3D(
                                 Float.parseFloat(split[1]),
                                 Float.parseFloat(split[2]),
                                 Float.parseFloat(split[3])
                         ));
                         break;
                     case "vn":
-                        model.getNormals().add(new Vector3f(
+                        model.getNormals().add(new Vec3D(
                                 Float.parseFloat(split[1]),
                                 Float.parseFloat(split[2]),
                                 Float.parseFloat(split[3])

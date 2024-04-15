@@ -1,14 +1,11 @@
 package p01start;
-
-import com.jme3.math.Vector3f;
 import transforms.Vec3D;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapFactory {
-    List<Vector3f> wallList = new ArrayList<>();
-    List<Vector3f> floorList = new ArrayList<>();
+
     private final int MAZE_WIDTH;
     private final int MAZE_HEIGHT;
     private final float WALL_SIZE;

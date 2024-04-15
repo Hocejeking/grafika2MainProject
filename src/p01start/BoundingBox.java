@@ -1,6 +1,4 @@
 package p01start;
-
-import com.jme3.math.Vector3f;
 import transforms.Vec3D;
 
 import java.util.List;
@@ -14,17 +12,17 @@ public class BoundingBox {
         this.max = max;
     }
 
-    BoundingBox(List<Vector3f> vertices){
+    BoundingBox(List<Vec3D> vertices){
         float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE, minZ = Float.MAX_VALUE;
         float maxX = Float.MIN_VALUE, maxY = Float.MIN_VALUE, maxZ = Float.MIN_VALUE;
 
-        for (Vector3f vertex : vertices) {
-            minX = Math.min(minX, vertex.x);
-            minY = Math.min(minY, vertex.y);
-            minZ = Math.min(minZ, vertex.z);
-            maxX = Math.max(maxX, vertex.x);
-            maxY = Math.max(maxY, vertex.y);
-            maxZ = Math.max(maxZ, vertex.z);
+        for (Vec3D vertex : vertices) {
+            minX = (float) Math.min(minX, vertex.getX());
+            minY = (float) Math.min(minY, vertex.getY());
+            minZ = (float) Math.min(minZ, vertex.getZ());
+            maxX = (float) Math.max(maxX, vertex.getX());
+            maxY = (float) Math.max(maxY, vertex.getY());
+            maxZ = (float) Math.max(maxZ, vertex.getZ());
         }
 
          min = new Vec3D(minX, minY, minZ);
