@@ -7,12 +7,12 @@ public class BoundingBox {
     Vec3D min;
     Vec3D max;
 
-    BoundingBox(Vec3D min, Vec3D max){
+   public BoundingBox(Vec3D min, Vec3D max){
         this.min = min;
         this.max = max;
     }
 
-    BoundingBox(List<Vec3D> vertices){
+    public BoundingBox(List<Vec3D> vertices){
         float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE, minZ = Float.MAX_VALUE;
         float maxX = Float.MIN_VALUE, maxY = Float.MIN_VALUE, maxZ = Float.MIN_VALUE;
 
@@ -69,9 +69,16 @@ public class BoundingBox {
         return !((tmin > tzmax) || (tzmin > tmax));
     }
 
-    private static boolean isPointInsideAABB(Vec3D point, BoundingBox box) {
-        return point.getX() >= box.min.getX() && point.getX() <= box.max.getX() &&
-                point.getY() >= box.min.getY() && point.getY() <= box.max.getY() &&
-                point.getZ() >= box.min.getZ() && point.getZ() <= box.max.getZ();
+    public boolean isPointInsideAABB(Vec3D point) {
+        return point.getX() >= this.min.getX() && point.getX() <= this.max.getX() &&
+                point.getY() >= this.min.getY() && point.getY() <= this.max.getY() &&
+                point.getZ() >= this.min.getZ() && point.getZ() <= this.max.getZ();
+    }
+
+    @Override
+    public String toString() {
+        System.out.println(min.toString());
+        System.out.println(max.toString());
+        return min.toString() + " " + max.toString();
     }
 }

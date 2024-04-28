@@ -3,6 +3,7 @@ package transforms;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
+import transforms.*;
 
 /**
  * A 3x3 matrix with common operations, immutable 

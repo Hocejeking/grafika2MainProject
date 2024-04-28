@@ -301,7 +301,7 @@ public class Vec3D {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return (this == obj) || (obj != null) && (obj instanceof Vec3D) 
+		return (this == obj) || (obj != null) && (obj instanceof Vec3D)
 				&& (new Double(((Vec3D) obj).getX()).equals(getX()))
 				&& (new Double(((Vec3D) obj).getY()).equals(getY()))
 				&& (new Double(((Vec3D) obj).getZ()).equals(getZ()));

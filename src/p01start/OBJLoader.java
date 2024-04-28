@@ -1,11 +1,9 @@
 package p01start;
 
 import java.io.*;
-import java.util.Optional;
 import java.util.Scanner;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 import transforms.Vec2D;
 import transforms.Vec3D;
 

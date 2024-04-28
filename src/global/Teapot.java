@@ -8,7 +8,6 @@ import java.util.List;
 
 import lwjglutils.OGLBuffers;
 import lwjglutils.ToFloatArray;
-import transforms.*;
 import transforms.Bicubic;
 import transforms.Cubic;
 import transforms.Point3D;

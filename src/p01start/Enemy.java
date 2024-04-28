@@ -1,7 +1,6 @@
 package p01start;
 
 import global.GLCamera;
-import transforms.Camera;
 import transforms.Vec3D;
 
 import java.util.ArrayList;

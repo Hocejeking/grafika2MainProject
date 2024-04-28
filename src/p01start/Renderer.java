@@ -39,6 +39,8 @@ public class Renderer extends AbstractRenderer {
     private long timer = System.nanoTime() + (15 * 1_000_000_000L);;
     private SkyBox skybox;
 
+    public List<Vec3D> quads = new ArrayList<>();
+
     private boolean per = true, move = false;
     private static float speed = 0.2f;
     private int cameraMode, lastCameraMode = -1;
@@ -67,36 +69,37 @@ public class Renderer extends AbstractRenderer {
                 if(!noTimeLeft) {
                     switch (key) {
                         case GLFW_KEY_W:
-                            if (camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.FORWARD)) {
-                                camera.backward(0.3f);
+                            if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.FORWARD)) {
                                 break;
                             }
-                            camera.forward(speed);
-                            break;
+                            else{
+                                camera.forward(speed);
+                                break;
+                            }
                         case GLFW_KEY_S:
-                            if (camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.BACK)) {
-                                camera.forward(0.3f);
+                            if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.BACK)) {
                                 break;
                             }
-                            camera.backward(speed);
-                            break;
+                            else{
+                                camera.backward(speed);
+                                break;
+                            }
                         case GLFW_KEY_A:
-                            if (camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.LEFT)) {
-                                camera.right(0.3f);
+                            if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.LEFT)) {
                                 break;
                             }
-                            camera.left(speed);
-                            break;
+                            else{
+                                camera.left(speed);
+                                break;
+                            }
                         case GLFW_KEY_D:
-                            if (camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.RIGHT)) {
-                                camera.left(0.3f);
+                            if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.RIGHT)) {
                                 break;
                             }
-                            camera.right(speed);
-                            break;
-                        case GLFW_KEY_E:
-                            translateDoor();
-                            break;
+                            else{
+                                camera.right(speed);
+                                break;
+                            }
                     }
                 }
                 if(key==GLFW_KEY_R && action == GLFW_PRESS && noTimeLeft){
@@ -217,8 +220,8 @@ public class Renderer extends AbstractRenderer {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
         camera = new GLCamera();
-        camera.setRadius(0.5f);
-        camera.setPosition(new Vec3D(1,0,1));
+        camera.setRadius(0.01f);
+        camera.setPosition(new Vec3D(10,0,10));
     }
 
     private void drawScene() {
@@ -404,11 +407,6 @@ public class Renderer extends AbstractRenderer {
         glPopMatrix();
     }
 
-    private void translateDoor(){
-
-    }
-
-
     @Override
     public void display() {
         glViewport(0, 0, width, height);
@@ -468,8 +466,6 @@ public class Renderer extends AbstractRenderer {
             textRenderer.addStr2D(3,20, "time: " + String.format("%02d:%02d", minutes,seconds));
             textRenderer.addStr2D(3,40,"YOUR SCORE: " + score);
         }
-
-
 
         textRenderer.draw();
     }
