@@ -33,7 +33,9 @@ public class Renderer extends AbstractRenderer {
 
     private double ex, ey, ez;
     private float zenit, azimut;
+    private boolean flagIsOutOFAmmo = false;
     private int score = 0;
+    private int ammo = 10;
     private float trans, deltaTrans = 0;
     private final MapFactory mapFactory = new MapFactory(100,50,1f);
     private long timer = System.nanoTime() + (15 * 1_000_000_000L);;
@@ -47,11 +49,13 @@ public class Renderer extends AbstractRenderer {
     private List<Quad> wallList = new ArrayList<>();
     private List<Quad> floorList = new ArrayList<>();
     private List<Quad> doorList = new ArrayList<>();
+    private List<Quad> ammoBoxesList = new ArrayList<>();
     private OGLTexture2D texture;
     private OGLTexture2D gun;
     private OGLTexture2D floor;
     private OGLTexture2D door;
     private OGLTexture2D enemyTex;
+    private OGLTexture2D ammoTex;
     private OGLTexture2D.Viewer textureViewer;
     private OBJLoader objLoader = new OBJLoader();
     private Obj enemyOBJ = new Obj();
@@ -126,12 +130,19 @@ public class Renderer extends AbstractRenderer {
                     double y = yBuffer.get(0);
 
                     if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
-                        if(enemy.killAndGenerateEnemy(camera)){
-                            timer = System.nanoTime() + (15 * 1_000_000_000L);
-                            score++;
+                        if (ammo > 0) {
+                            ammo--;
+                            if (enemy.killAndGenerateEnemy(camera)) {
+                                timer = System.nanoTime() + (15 * 1_000_000_000L);
+                                score++;
+                            }
+                            ox = (float) x;
+                            oy = (float) y;
+                            flagIsOutOFAmmo = false;
                         }
-                        ox = (float) x;
-                        oy = (float) y;
+                        else{
+                            flagIsOutOFAmmo = true;
+                        }
                     }
                 }
             }
@@ -176,6 +187,7 @@ public class Renderer extends AbstractRenderer {
         wallList = mapFactory.generateMaze();
         floorList = mapFactory.generateFloor();
         doorList = mapFactory.generateDoors();
+        ammoBoxesList = mapFactory.generateAmmoBoxes();
         try {
             System.out.println("Loading");
             enemyOBJ = objLoader.loadModel(new File("src/models/swampGhoul.obj"));
@@ -201,6 +213,7 @@ public class Renderer extends AbstractRenderer {
             floor = new OGLTexture2D("textures/floor.jpg");
             door = new OGLTexture2D("textures/door.jfif");
             enemyTex = new OGLTexture2D("textures/swampGhoul_diffuse.png");
+            ammoTex = new OGLTexture2D("textures/ammo.jpg");
             textureCube[0] = new OGLTexture2D("textures/skybox/yellowcloud_ft.jpg");
             textureCube[2] = new OGLTexture2D("textures/skybox/yellowcloud_bk.jpg");
             textureCube[4] = new OGLTexture2D("textures/skybox/yellowcloud_up.jpg");
@@ -240,6 +253,9 @@ public class Renderer extends AbstractRenderer {
         drawFloor(floorList);
         door.bind();
         drawDoors(doorList);
+        ammoTex.bind();
+        drawAmmoBoxes(ammoBoxesList);
+        //glLoadIdentity();
         drawSkyBox();
         drawGun();
     }
@@ -333,6 +349,29 @@ public class Renderer extends AbstractRenderer {
         glEnable(GL_DEPTH_TEST);
     }
 
+    private void drawAmmoBoxes(List<Quad> ammoBoxes){
+        for(Quad q : ammoBoxes){
+            glPushMatrix();
+            glTranslated(q.translation.getX(),q.translation.getY(), q.translation.getZ());
+            glRotated(q.angleOfRotation,q.rotation.getX(),q.rotation.getY(),q.rotation.getZ());
+            glBegin(GL_POLYGON);
+            Vec3D v1 = q.vertexes.get(0);
+            Vec3D v2 = q.vertexes.get(1);
+            Vec3D v3 = q.vertexes.get(2);
+            Vec3D v4 = q.vertexes.get(3);
+            glTexCoord2f(0f, 0f);
+            glVertex3d(v1.getX(), v1.getY(), v1.getZ());
+            glTexCoord2f(1f, 0f);
+            glVertex3d(v2.getX(), v2.getY(), v2.getZ());
+            glTexCoord2f(1f, 1f);
+            glVertex3d(v3.getX(), v3.getY(), v3.getZ());
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3d(v4.getX(), v4.getY(), v4.getZ());
+            glEnd();
+            glPopMatrix();
+        }
+    }
+
     private void drawDoors(List<Quad> doorPositions){
         for(Quad q : doorPositions){
             glPushMatrix();
@@ -407,8 +446,17 @@ public class Renderer extends AbstractRenderer {
         glPopMatrix();
     }
 
+    private void checkForAmmoBox(){
+        if(camera.checkForAmmoBoxCollision(ammoBoxesList)){
+            ammo += 10;
+            ammoBoxesList.clear();
+            ammoBoxesList = mapFactory.generateNewAmmoBox();
+        }
+    }
+
     @Override
     public void display() {
+        checkForAmmoBox();
         glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
@@ -461,10 +509,16 @@ public class Renderer extends AbstractRenderer {
             textRenderer.addStr2D(3, 80, "Number of triangles in the scene: " + (enemy.object.getFaces().size()));
             textRenderer.addStr2D(3,100, "time: " + String.format("%02d:%02d", minutes,seconds));
             textRenderer.addStr2D(3,120,"YOUR SCORE: " + score);
+            textRenderer.addStr2D(3,140, "Ammo: " + ammo);
+            if(flagIsOutOFAmmo)
+                textRenderer.addStr2D(3,160, "OUT OF AMMO");
         }
         else{
-            textRenderer.addStr2D(3,20, "time: " + String.format("%02d:%02d", minutes,seconds));
-            textRenderer.addStr2D(3,40,"YOUR SCORE: " + score);
+            textRenderer.addStr2D(3,20, "Time: " + String.format("%02d:%02d", minutes,seconds));
+            textRenderer.addStr2D(3,40,"Score: " + score);
+            textRenderer.addStr2D(3,60, "Ammo: " + ammo);
+            if(flagIsOutOFAmmo)
+                textRenderer.addStr2D(3,80, "OUT OF AMMO");
         }
 
         textRenderer.draw();
@@ -475,6 +529,7 @@ public class Renderer extends AbstractRenderer {
         noTimeLeft = false;
         timer = System.nanoTime() + (15 * 1_000_000_000L);
         score = 0;
+        flagIsOutOFAmmo = false;
     }
 
 }

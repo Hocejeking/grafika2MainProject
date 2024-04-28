@@ -42,7 +42,9 @@ public class Enemy{
     List<Vec3D> availablePositions = new ArrayList<>(Arrays.asList(
             new Vec3D(0,0,0),
             new Vec3D(-13,0,13),
-            new Vec3D(-13,0,-13)
+            new Vec3D(-13,0,-13),
+            new Vec3D(14,0,14),
+            new Vec3D(8,0,6)
     ));
 
     private Vec3D generateValue(){

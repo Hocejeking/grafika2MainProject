@@ -3,7 +3,7 @@ import com.simsilica.mathd.Vec3d;
 import p01start.Quad;
 import p01start.Renderer;
 import transforms.*;
-
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -276,6 +276,27 @@ public class GLCamera {
 		if (isColliding)
 			return true;
 		return isColliding;
+	}
+
+	public boolean checkForAmmoBoxCollision(List<Quad> ammoBoxes){
+		for(Quad q : ammoBoxes) {
+			for (Vec3D ammoBox : q.vertexes) {
+				Mat3 rot = calculateTheRotationMatrix(q.rotation, q.angleOfRotation);
+				Vec3D rotatedVertex = new Vec3D(ammoBox.mul(rot));
+				Vec3D translatedVertex = new Vec3D(rotatedVertex.add(q.translation));
+				double distanceX = translatedVertex.getX() - pos.getX();
+				double distanceY = translatedVertex.getY() - pos.getY();
+				double distanceZ = translatedVertex.getZ() - pos.getZ();
+
+				double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ);
+				if (distance <= 2.0) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		return false;
 	}
 
 	private Mat3 calculateTheRotationMatrix(Vec3D rot, int angle) {

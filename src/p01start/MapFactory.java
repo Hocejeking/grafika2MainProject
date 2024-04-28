@@ -255,6 +255,20 @@ public class MapFactory {
         return Quads;
     }
 
+    public List<Quad> generateAmmoBoxes(){
+        ArrayList<Quad> Quads = new ArrayList<>();
+        AmmoBox box = new AmmoBox(new Vec3D(14,0,14), new Vec3D(0,0,0),0);
+        Quads.add(box);
+        return Quads;
+    }
+
+    public List<Quad> generateNewAmmoBox(){
+        ArrayList<Quad> Quads = new ArrayList<>();
+        AmmoBox box = new AmmoBox(new Vec3D(8,0,8), new Vec3D(0,0,0),0);
+        Quads.add(box);
+        return Quads;
+    }
+
     public List<Quad> generateDoors(){
         ArrayList<Quad> Quads = new ArrayList<>();
         Quad quad1 = new Quad(

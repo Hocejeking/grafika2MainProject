@@ -10,7 +10,7 @@ public class Quad {
     public Vec3D translation;
     public Vec3D rotation;
     public int angleOfRotation;
-    private final Boolean Iscollidable;
+    private Boolean Iscollidable = true;
     public BoundingBox boundingBox;
 
     private Mat3 rotMat = new Mat3Identity();
@@ -40,6 +40,9 @@ public class Quad {
         rotMat = calculateTheRotationMatrix(this.rotation,this.angleOfRotation);
         this.boundingBox = calcAABB();
         System.out.println(boundingBox.toString());
+    }
+
+    public Quad() {
     }
 
     private BoundingBox calcAABB(){
