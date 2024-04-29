@@ -1,10 +1,10 @@
-package p01start;
+package p01start.App;
 import global.LwjglWindow;
 
 public class App {
 
 	public static void main(String[] args) {
-		new LwjglWindow(new p01start.Renderer(), true);
+		new LwjglWindow(new Renderer(), true);
 	}
 
 }

@@ -1,10 +1,7 @@
 package global;
-import com.simsilica.mathd.Vec3d;
-import p01start.Quad;
-import p01start.Renderer;
+import p01start.Geometry.Quad;
 import transforms.*;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -252,12 +249,12 @@ public class GLCamera {
 				newPos = calculateRight(0.25f);
 
 		}
-		float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE, minZ = Float.MAX_VALUE;
-		float maxX = -Float.MAX_VALUE, maxY = -Float.MAX_VALUE, maxZ = -Float.MAX_VALUE;
+
 		boolean isColliding = false;
 		for (Quad q : vertices) {
+			float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE, minZ = Float.MAX_VALUE;
+			float maxX = -Float.MAX_VALUE, maxY = -Float.MAX_VALUE, maxZ = -Float.MAX_VALUE;
 			for (Vec3D vertex : q.vertexes) {
-				System.out.println(vertex.toString());
 				Mat3 rot = calculateTheRotationMatrix(q.rotation, q.angleOfRotation);
 				Vec3D rotatedVertex = new Vec3D(vertex.mul(rot));
 				Vec3D translatedVertex = new Vec3D(rotatedVertex.add(q.translation));
@@ -267,15 +264,15 @@ public class GLCamera {
 				maxX = (float) Math.max(maxX, translatedVertex.getX());
 				maxY = (float) Math.max(maxY, translatedVertex.getY());
 				maxZ = (float) Math.max(maxZ, translatedVertex.getZ());
-			}
-			isColliding = (Math.abs(newPos.getX() - (minX + maxX) / 2) *1.001 < (camera.getRadius() + (maxX - minX) / 2)) &&
-					(Math.abs(newPos.getY() - (minY + maxY) / 2) *1.001 < (camera.getRadius() + (maxY - minY) / 2)) &&
-					(Math.abs(newPos.getZ() - (minZ + maxZ) / 2) *1.001 < (camera.getRadius() + (maxZ - minZ) / 2));
 
+				isColliding = (Math.abs(newPos.getX() - (minX + maxX) / 2)  < (camera.getRadius() + (maxX - minX) / 2)) &&
+						(Math.abs(newPos.getZ() - (minZ + maxZ) / 2)  < (camera.getRadius() + (maxZ - minZ) / 2));
+
+				if (isColliding)
+					return true;
+			}
 		}
-		if (isColliding)
-			return true;
-		return isColliding;
+		return false;
 	}
 
 	public boolean checkForAmmoBoxCollision(List<Quad> ammoBoxes){

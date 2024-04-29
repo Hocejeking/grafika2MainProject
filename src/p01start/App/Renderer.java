@@ -1,4 +1,4 @@
-package p01start;
+package p01start.App;
 
 import global.AbstractRenderer;
 import global.GLCamera;
@@ -8,6 +8,10 @@ import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWScrollCallback;
+import p01start.Geometry.Quad;
+import p01start.Map.*;
+import p01start.Sound.Sound;
+import p01start.Sound.SoundManager;
 import transforms.Vec3D;
 
 import java.io.File;
@@ -62,6 +66,10 @@ public class Renderer extends AbstractRenderer {
     private Enemy enemy;
     private GLCamera camera;
     private boolean debugInfo = false;
+    private SoundManager soundManager;
+    private Sound shootSound;
+    private Sound stepSound;
+    private Sound hitSound;
 
     private boolean noTimeLeft = false;
 
@@ -73,37 +81,25 @@ public class Renderer extends AbstractRenderer {
                 if(!noTimeLeft) {
                     switch (key) {
                         case GLFW_KEY_W:
-                            if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.FORWARD)) {
-                                break;
-                            }
-                            else{
+                            if (!camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.FORWARD)) {
                                 camera.forward(speed);
-                                break;
                             }
+                            break;
                         case GLFW_KEY_S:
-                            if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.BACK)) {
-                                break;
-                            }
-                            else{
+                            if (!camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.BACK)) {
                                 camera.backward(speed);
-                                break;
                             }
+                            break;
                         case GLFW_KEY_A:
-                            if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.LEFT)) {
-                                break;
-                            }
-                            else{
+                            if (!camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.LEFT)) {
                                 camera.left(speed);
-                                break;
                             }
+                            break;
                         case GLFW_KEY_D:
-                            if(camera.collidesWithQuad(wallList,camera, GLCamera.CollisionDirection.RIGHT)) {
-                                break;
-                            }
-                            else{
+                            if (!camera.collidesWithQuad(wallList, camera, GLCamera.CollisionDirection.RIGHT)) {
                                 camera.right(speed);
-                                break;
                             }
+                            break;
                     }
                 }
                 if(key==GLFW_KEY_R && action == GLFW_PRESS && noTimeLeft){
@@ -131,9 +127,11 @@ public class Renderer extends AbstractRenderer {
 
                     if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS) {
                         if (ammo > 0) {
+                            shootSound.play();
                             ammo--;
                             if (enemy.killAndGenerateEnemy(camera)) {
                                 timer = System.nanoTime() + (15 * 1_000_000_000L);
+                                hitSound.play();
                                 score++;
                             }
                             ox = (float) x;
@@ -184,6 +182,8 @@ public class Renderer extends AbstractRenderer {
     @Override
     public void init() {
         super.init();
+        soundManager = new SoundManager();
+
         wallList = mapFactory.generateMaze();
         floorList = mapFactory.generateFloor();
         doorList = mapFactory.generateDoors();
@@ -192,6 +192,9 @@ public class Renderer extends AbstractRenderer {
             System.out.println("Loading");
             enemyOBJ = objLoader.loadModel(new File("src/models/swampGhoul.obj"));
             enemy = new Enemy(enemyOBJ, new Vec3D(0,0,0));
+            shootSound = new Sound("src/sounds/sound.ogg",false);
+            stepSound = new Sound("src/sounds/step.ogg", false);
+            hitSound = new Sound("src/sounds/hitSound.ogg", false);
         }catch (IOException e){
             System.out.println(e);
         }
@@ -233,7 +236,7 @@ public class Renderer extends AbstractRenderer {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
         camera = new GLCamera();
-        camera.setRadius(0.01f);
+        camera.setRadius(0.5f);
         camera.setPosition(new Vec3D(10,0,10));
     }
 
@@ -510,6 +513,7 @@ public class Renderer extends AbstractRenderer {
             textRenderer.addStr2D(3,100, "time: " + String.format("%02d:%02d", minutes,seconds));
             textRenderer.addStr2D(3,120,"YOUR SCORE: " + score);
             textRenderer.addStr2D(3,140, "Ammo: " + ammo);
+            textRenderer.addStr2D(3, 160, "Enemy position" + enemy.pos);
             if(flagIsOutOFAmmo)
                 textRenderer.addStr2D(3,160, "OUT OF AMMO");
         }

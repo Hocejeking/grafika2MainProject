@@ -1,4 +1,4 @@
-package p01start;
+package p01start.Map;
 
 import java.util.List;
 import java.util.ArrayList;

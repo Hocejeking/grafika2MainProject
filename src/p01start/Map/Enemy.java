@@ -1,6 +1,8 @@
-package p01start;
+package p01start.Map;
 
 import global.GLCamera;
+import p01start.Geometry.BoundingBox;
+import p01start.Geometry.Ray;
 import transforms.Vec3D;
 
 import java.util.ArrayList;

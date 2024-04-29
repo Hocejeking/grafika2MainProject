@@ -1,4 +1,6 @@
-package p01start;
+package p01start.Map;
+import p01start.Geometry.AmmoBox;
+import p01start.Geometry.Quad;
 import transforms.Vec3D;
 
 import java.util.ArrayList;
