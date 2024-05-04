@@ -19,7 +19,7 @@ public class Enemy{
     public Vec3D pos;
     BoundingBox AABB;
 
-    Enemy(Obj o, Vec3D pos){
+    public Enemy(Obj o, Vec3D pos){
         object=o;
         AABB = new BoundingBox(o.getVertices());
         this.pos = pos;

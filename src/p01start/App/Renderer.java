@@ -70,6 +70,7 @@ public class Renderer extends AbstractRenderer {
     private Sound shootSound;
     private Sound stepSound;
     private Sound hitSound;
+    private Sound reloadSound;
 
     private boolean noTimeLeft = false;
 
@@ -186,7 +187,6 @@ public class Renderer extends AbstractRenderer {
 
         wallList = mapFactory.generateMaze();
         floorList = mapFactory.generateFloor();
-        doorList = mapFactory.generateDoors();
         ammoBoxesList = mapFactory.generateAmmoBoxes();
         try {
             System.out.println("Loading");
@@ -195,6 +195,7 @@ public class Renderer extends AbstractRenderer {
             shootSound = new Sound("src/sounds/sound.ogg",false);
             stepSound = new Sound("src/sounds/step.ogg", false);
             hitSound = new Sound("src/sounds/hitSound.ogg", false);
+            reloadSound = new Sound("src/sounds/reload.ogg", false);
         }catch (IOException e){
             System.out.println(e);
         }
@@ -254,11 +255,8 @@ public class Renderer extends AbstractRenderer {
         drawMaze(wallList);
         floor.bind();
         drawFloor(floorList);
-        door.bind();
-        drawDoors(doorList);
         ammoTex.bind();
         drawAmmoBoxes(ammoBoxesList);
-        //glLoadIdentity();
         drawSkyBox();
         drawGun();
     }
@@ -357,43 +355,68 @@ public class Renderer extends AbstractRenderer {
             glPushMatrix();
             glTranslated(q.translation.getX(),q.translation.getY(), q.translation.getZ());
             glRotated(q.angleOfRotation,q.rotation.getX(),q.rotation.getY(),q.rotation.getZ());
-            glBegin(GL_POLYGON);
-            Vec3D v1 = q.vertexes.get(0);
-            Vec3D v2 = q.vertexes.get(1);
-            Vec3D v3 = q.vertexes.get(2);
-            Vec3D v4 = q.vertexes.get(3);
-            glTexCoord2f(0f, 0f);
-            glVertex3d(v1.getX(), v1.getY(), v1.getZ());
-            glTexCoord2f(1f, 0f);
-            glVertex3d(v2.getX(), v2.getY(), v2.getZ());
-            glTexCoord2f(1f, 1f);
-            glVertex3d(v3.getX(), v3.getY(), v3.getZ());
-            glTexCoord2f(0.0f, 1.0f);
-            glVertex3d(v4.getX(), v4.getY(), v4.getZ());
-            glEnd();
-            glPopMatrix();
-        }
-    }
-
-    private void drawDoors(List<Quad> doorPositions){
-        for(Quad q : doorPositions){
-            glPushMatrix();
-            glTranslated(q.translation.getX(),q.translation.getY(),q.translation.getZ());
-            glRotated(q.angleOfRotation,q.rotation.getX(),q.rotation.getY(),q.rotation.getZ());
             glBegin(GL_QUADS);
-            Vec3D v1 = q.vertexes.get(0);
-            Vec3D v2 = q.vertexes.get(1);
-            Vec3D v3 = q.vertexes.get(2);
-            Vec3D v4 = q.vertexes.get(3);
 
-            glTexCoord2f(0f, 0f);
-            glVertex3d(v1.getX(), v1.getY(), v1.getZ());
-            glTexCoord2f(1f, 0f);
-            glVertex3d(v2.getX(), v2.getY(), v2.getZ());
-            glTexCoord2f(1f, 1f);
-            glVertex3d(v3.getX(), v3.getY(), v3.getZ());
+            // Front face
             glTexCoord2f(0.0f, 1.0f);
-            glVertex3d(v4.getX(), v4.getY(), v4.getZ());
+            glVertex3f(-0.2f, -0.2f, 0.2f);
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(0.2f, -0.2f, 0.2f);
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(0.2f, 0.2f, 0.2f);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(-0.2f, 0.2f, 0.2f);
+
+            // Back face
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0.2f, -0.2f, -0.2f);
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(-0.2f, -0.2f, -0.2f);
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(-0.2f, 0.2f, -0.2f);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0.2f, 0.2f, -0.2f);
+
+            // Left face
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(-0.2f, -0.2f, -0.2f);
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(-0.2f, -0.2f, 0.2f);
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(-0.2f, 0.2f, 0.2f);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(-0.2f, 0.2f, -0.2f);
+
+            // Right face
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(0.2f, -0.2f, 0.2f);
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(0.2f, -0.2f, -0.2f);
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(0.2f, 0.2f, -0.2f);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(0.2f, 0.2f, 0.2f);
+
+            // Top face
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(-0.2f, 0.2f, -0.2f);
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(0.2f, 0.2f, -0.2f);
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(0.2f, 0.2f, 0.2f);
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(-0.2f, 0.2f, 0.2f);
+
+            // Bottom face
+            glTexCoord2f(0.0f, 1.0f);
+            glVertex3f(-0.2f, -0.2f, -0.2f);
+            glTexCoord2f(1.0f, 1.0f);
+            glVertex3f(0.2f, -0.2f, -0.2f);
+            glTexCoord2f(1.0f, 0.0f);
+            glVertex3f(0.2f, -0.2f, 0.2f);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex3f(-0.2f, -0.2f, 0.2f);
+
             glEnd();
             glPopMatrix();
         }
@@ -451,9 +474,11 @@ public class Renderer extends AbstractRenderer {
 
     private void checkForAmmoBox(){
         if(camera.checkForAmmoBoxCollision(ammoBoxesList)){
+            reloadSound.play();
             ammo += 10;
+            Vec3D prevPos = ammoBoxesList.get(0).translation;
             ammoBoxesList.clear();
-            ammoBoxesList = mapFactory.generateNewAmmoBox();
+            ammoBoxesList = mapFactory.generateNewAmmoBox(prevPos);
         }
     }
 
@@ -513,9 +538,10 @@ public class Renderer extends AbstractRenderer {
             textRenderer.addStr2D(3,100, "time: " + String.format("%02d:%02d", minutes,seconds));
             textRenderer.addStr2D(3,120,"YOUR SCORE: " + score);
             textRenderer.addStr2D(3,140, "Ammo: " + ammo);
-            textRenderer.addStr2D(3, 160, "Enemy position" + enemy.pos);
+            textRenderer.addStr2D(3, 160, "Enemy position: " + enemy.pos);
             if(flagIsOutOFAmmo)
-                textRenderer.addStr2D(3,160, "OUT OF AMMO");
+                textRenderer.addStr2D(3,180, "OUT OF AMMO");
+            textRenderer.addStr2D(3,200,"Ammobox position: " + ammoBoxesList.get(0).translation.toString());
         }
         else{
             textRenderer.addStr2D(3,20, "Time: " + String.format("%02d:%02d", minutes,seconds));

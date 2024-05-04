@@ -4,7 +4,9 @@ import p01start.Geometry.Quad;
 import transforms.Vec3D;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class MapFactory {
 
@@ -19,6 +21,7 @@ public class MapFactory {
     }
 
     public List<Quad> generateMaze() {
+        ArrayList<Quad> Quads = new ArrayList<>();
         Quad quad = new Quad(
                 true,
                 new Vec3D(2,0,0),
@@ -226,8 +229,255 @@ public class MapFactory {
                 new Vec3D(0,0,0),
                 0
         );
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-10,0,-2),
+                false,
+                new Vec3D(0,0,0),
+                0
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-12,0,-2),
+                false,
+                new Vec3D(0,0,0),
+                0
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-14,0,-2),
+                false,
+                new Vec3D(0,0,0),
+                0
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,-1),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,-3),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,-5),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,-7),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,1),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,3),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,5),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,7),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,9),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-14,0,6),
+                false,
+                new Vec3D(0,0,0),
+                0
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-12,0,6),
+                false,
+                new Vec3D(0,0,0),
+                0
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-10,0,6),
+                false,
+                new Vec3D(0,0,0),
+                0
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,11),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,13),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,15),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,-9),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,-11),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,-13),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,-15),
+                false,
+                new Vec3D(0,1,0),
+                90
+        ));
+        Quads.add(new Quad(
+                true,
+                new Vec3D(-15,0,15),
+                false,
+                new Vec3D(0,0,0),
+                0
+        ));
+        Quads.add(new Quad(true, new Vec3D(-15.0f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-13.0f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-11.0f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-9.0f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-7.0f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-5.0f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-3.0f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-1.0f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(1f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(3f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(5f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(7f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(9f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(11f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(13f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 15.0f), false, new Vec3D(0.0f, 0.0f, 0.0f), 0));
 
-        ArrayList<Quad> Quads = new ArrayList<>();
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, -15.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, -13.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, -11.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, -9.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, -7.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, -5.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, -3.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, -1.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 1.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 3.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 5.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 7.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 9.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 11.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 13.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 15.0f), false, new Vec3D(0.0f, 1.0f, 0.0f), 90));
+
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(13f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(11f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(9f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(7f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(5f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(3f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(1f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-1f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-3f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-5f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-7f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-9f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-11f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-13f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-15f, 0.0f, -15.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+
+        Quads.add(new Quad(true, new Vec3D(-7f, 0.0f, 7f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-7f, 0.0f, 9f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-7f, 0.0f, 11f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-7f, 0.0f, 12f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-5f, 0.0f, 7f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-5f, 0.0f, 9f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-5f, 0.0f, 11f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-5f, 0.0f, 12f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+
+        Quads.add(new Quad(true, new Vec3D(-4f, 0.0f, 13.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-3f, 0.0f, 13.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-1f, 0.0f, 13.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(1f, 0.0f, 13.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(3f, 0.0f, 13.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(5f, 0.0f, 13.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+
+        Quads.add(new Quad(true, new Vec3D(6f, 0.0f, 12f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(6f, 0.0f, 11f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(6f, 0.0f, 9f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+
+        Quads.add(new Quad(true, new Vec3D(15f, 0.0f, 6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(13f, 0.0f, 6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(11f, 0.0f, 6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+
+        Quads.add(new Quad(true, new Vec3D(10f, 0.0f, 5f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(10f, 0.0f, 3f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(10f, 0.0f, 1f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(10f, 0.0f, -1f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(10f, 0.0f, -3f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(10f, 0.0f, -5f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+
+        Quads.add(new Quad(true, new Vec3D(10f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(9f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(7f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(5f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(3f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+
         Quads.add(quad);
         Quads.add(quad2);
         Quads.add(quad3);
@@ -264,35 +514,26 @@ public class MapFactory {
         return Quads;
     }
 
-    public List<Quad> generateNewAmmoBox(){
+    public List<Quad> generateNewAmmoBox(Vec3D pos){
         ArrayList<Quad> Quads = new ArrayList<>();
-        AmmoBox box = new AmmoBox(new Vec3D(8,0,8), new Vec3D(0,0,0),0);
-        Quads.add(box);
-        return Quads;
+        Random rand = new Random();
+        Vec3D generatedPos = availablePositionsForAmmoBox.get(rand.nextInt(0,availablePositionsForAmmoBox.size()));
+        if(pos.eEquals(generatedPos)){
+            return generateNewAmmoBox(pos);
+        }
+        else{
+            Quads.add(new AmmoBox(generatedPos, new Vec3D(0,0,0),0));
+            return Quads;
+        }
     }
 
-    public List<Quad> generateDoors(){
-        ArrayList<Quad> Quads = new ArrayList<>();
-        Quad quad1 = new Quad(
-                true,
-                new Vec3D(1,0,1),
-                false,
-                new Vec3D(0,1,0),
-                90
-        );
+    List<Vec3D> availablePositionsForAmmoBox = new ArrayList<>(Arrays.asList(
+           new Vec3D(5,0,5),
+           new Vec3D(10,0,10),
+           new Vec3D(13,0,-13),
+           new Vec3D(14,0,-12)
+    ));
 
-        Quad quad2 = new Quad(
-                true,
-                new Vec3D(-5,0,3),
-                false,
-                new Vec3D(0,1,0),
-                90
-        );
-
-        Quads.add(quad1);
-        Quads.add(quad2);
-        return Quads;
-    }
 
     public List<Quad> generateFloor(){
         ArrayList<Quad> Quads = new ArrayList<>();

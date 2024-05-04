@@ -15,7 +15,7 @@ public class Quad {
 
     private Mat3 rotMat = new Mat3Identity();
 
-    Quad(Vec3D a, Vec3D b, Vec3D c, Vec3D d, Vec3D translation, Boolean IsCollidable, Vec3D rotation, int angle){
+    public Quad(Vec3D a, Vec3D b, Vec3D c, Vec3D d, Vec3D translation, Boolean IsCollidable, Vec3D rotation, int angle){
         vertexes.add(new Vec3D(a));
         vertexes.add(new Vec3D(b));
         vertexes.add(new Vec3D(c));
@@ -28,7 +28,7 @@ public class Quad {
         this.boundingBox = calcAABB();
     }
 
-    Quad(boolean flagDefault, Vec3D translation, Boolean IsCollidable, Vec3D rotation, int angle){
+    public Quad(boolean flagDefault, Vec3D translation, Boolean IsCollidable, Vec3D rotation, int angle){
         vertexes.add(new Vec3D(-1f, 1f, 0f));
         vertexes.add(new Vec3D(1f, 1f, 0));
         vertexes.add(new Vec3D(1, -1f, 0));

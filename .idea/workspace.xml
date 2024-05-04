@@ -4,28 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7825591c-14c9-4d4d-a202-5e2f6f57511e" name="Changes" comment="bullets">
-      <change afterPath="$PROJECT_DIR$/src/p01start/Sound/Sound.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/p01start/Sound/SoundManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sounds/hitSound.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sounds/hitSound.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sounds/sound.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sounds/step.ogg" afterDir="false" />
+    <list default="true" id="7825591c-14c9-4d4d-a202-5e2f6f57511e" name="Changes" comment="Sound">
+      <change afterPath="$PROJECT_DIR$/src/sounds/reload.ogg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/global/GLCamera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/global/GLCamera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/AmmoBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Geometry/AmmoBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/App/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/BoundingBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Geometry/BoundingBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Entity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/MapFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/MapFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/OBJLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/OBJLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Obj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/Obj.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Quad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Geometry/Quad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Geometry/Ray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/App/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/SkyBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/SkyBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p01start/App/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/App/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p01start/Geometry/AmmoBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Geometry/AmmoBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p01start/Geometry/Quad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Geometry/Quad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p01start/Map/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p01start/Map/MapFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/MapFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/ammo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/ammo.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714317536532</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Sound">
+      <created>1714423151268</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1714423151268</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,7 +160,8 @@
     <MESSAGE value="fd" />
     <MESSAGE value="skybox" />
     <MESSAGE value="bullets" />
-    <option name="LAST_COMMIT_MESSAGE" value="bullets" />
+    <MESSAGE value="Sound" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sound" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
