@@ -4,15 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7825591c-14c9-4d4d-a202-5e2f6f57511e" name="Changes" comment="Sound">
-      <change afterPath="$PROJECT_DIR$/src/sounds/reload.ogg" afterDir="false" />
+    <list default="true" id="7825591c-14c9-4d4d-a202-5e2f6f57511e" name="Changes" comment="walls">
+      <change afterPath="$PROJECT_DIR$/src/models/bloodWasp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/textures/BloodWasp_Textures.rar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/textures/bloodWasp_alpha.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/textures/bloodWasp_diffuse.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/textures/bloodWasp_normal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/textures/bloodWasp_spec.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p01start/App/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/App/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Geometry/AmmoBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Geometry/AmmoBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Geometry/Quad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Geometry/Quad.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p01start/Map/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/Enemy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p01start/Map/MapFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/MapFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/textures/ammo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/textures/ammo.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/Request for DS2019 &amp; Declaration of Finances Form 6.2020 (1).pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/Request for DS2019 &amp; Declaration of Finances Form 6.2020.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714423151268</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="walls">
+      <created>1714828508079</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1714828508079</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,7 +172,8 @@
     <MESSAGE value="skybox" />
     <MESSAGE value="bullets" />
     <MESSAGE value="Sound" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sound" />
+    <MESSAGE value="walls" />
+    <option name="LAST_COMMIT_MESSAGE" value="walls" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

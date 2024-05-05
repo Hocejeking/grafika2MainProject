@@ -2,13 +2,12 @@ package p01start.Map;
 
 import global.GLCamera;
 import p01start.Geometry.BoundingBox;
+import p01start.Geometry.Quad;
 import p01start.Geometry.Ray;
+import transforms.Mat3;
 import transforms.Vec3D;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Enemy{
     private int magazines = 5;
@@ -42,11 +41,15 @@ public class Enemy{
     }
 
     List<Vec3D> availablePositions = new ArrayList<>(Arrays.asList(
-            new Vec3D(0,0,0),
-            new Vec3D(-13,0,13),
             new Vec3D(-13,0,-13),
             new Vec3D(14,0,14),
-            new Vec3D(8,0,6)
+            new Vec3D(8,0,6),
+            new Vec3D(9,0,-5),
+            new Vec3D(5,0,-9),
+            new Vec3D(13,0,4),
+            new Vec3D(-1,0,3),
+            new Vec3D(-11,0,4),
+            new Vec3D(0,0,11)
     ));
 
     private Vec3D generateValue(){
@@ -57,6 +60,15 @@ public class Enemy{
         }
         else{
             return generatedPos;
+        }
+    }
+
+    private class Rotation{
+        public Vec3D rotation;
+        public int angle;
+        public Rotation(Vec3D rot, int angle){
+            this.rotation = rot;
+            this.angle = angle;
         }
     }
 }

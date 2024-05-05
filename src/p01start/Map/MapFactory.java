@@ -110,13 +110,6 @@ public class MapFactory {
                 90
         );
 
-        Quad quad12 = new Quad(
-                true,
-                new Vec3D(0,0,0),
-                false,
-                new Vec3D(0,0,0),
-                0
-        );
 
         Quad quad13 = new Quad(
                 true,
@@ -477,6 +470,25 @@ public class MapFactory {
         Quads.add(new Quad(true, new Vec3D(7f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
         Quads.add(new Quad(true, new Vec3D(5f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
         Quads.add(new Quad(true, new Vec3D(3f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(1f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-1, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-3f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-5f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-6f, 0.0f, -6.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+
+        Quads.add(new Quad(true, new Vec3D(-7f, 0.0f, -7.0f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-7f, 0.0f, -7.0f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-7f, 0.0f, -9.0f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+        Quads.add(new Quad(true, new Vec3D(-7f, 0.0f, -11.0f), false, new Vec3D(0.0f, 1f, 0.0f), 90));
+
+        Quads.add(new Quad(true, new Vec3D(-6f, 0.0f, -12.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-5f, 0.0f, -12.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-3f, 0.0f, -12.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(-1f, 0.0f, -12.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(1f, 0.0f, -12.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(3f, 0.0f, -12.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(5f, 0.0f, -12.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
+        Quads.add(new Quad(true, new Vec3D(7f, 0.0f, -12.0f), false, new Vec3D(0.0f, 0f, 0.0f), 0));
 
         Quads.add(quad);
         Quads.add(quad2);
@@ -489,7 +501,6 @@ public class MapFactory {
         Quads.add(quad9);
         Quads.add(quad10);
         Quads.add(quad11);
-        Quads.add(quad12);
         Quads.add(quad13);
         Quads.add(quad14);
         Quads.add(quad15);
@@ -531,7 +542,17 @@ public class MapFactory {
            new Vec3D(5,0,5),
            new Vec3D(10,0,10),
            new Vec3D(13,0,-13),
-           new Vec3D(14,0,-12)
+           new Vec3D(14,0,-12),
+           new Vec3D(1,0,10),
+            new Vec3D(9,0,-4),
+            new Vec3D(-14,0,-13),
+            new Vec3D(-11,0,11),
+            new Vec3D(-10,0,1),
+            new Vec3D(0,0,-9),
+            new Vec3D(12,0,0),
+            new Vec3D(5,0,-13),
+            new Vec3D(-6,0,1)
+
     ));
 
 

@@ -190,7 +190,7 @@ public class Renderer extends AbstractRenderer {
         ammoBoxesList = mapFactory.generateAmmoBoxes();
         try {
             System.out.println("Loading");
-            enemyOBJ = objLoader.loadModel(new File("src/models/swampGhoul.obj"));
+            enemyOBJ = objLoader.loadModel(new File("src/models/bloodWasp.obj"));
             enemy = new Enemy(enemyOBJ, new Vec3D(0,0,0));
             shootSound = new Sound("src/sounds/sound.ogg",false);
             stepSound = new Sound("src/sounds/step.ogg", false);
@@ -216,7 +216,7 @@ public class Renderer extends AbstractRenderer {
             gun = new OGLTexture2D("textures/gun.gif");
             floor = new OGLTexture2D("textures/floor.jpg");
             door = new OGLTexture2D("textures/door.jfif");
-            enemyTex = new OGLTexture2D("textures/swampGhoul_diffuse.png");
+            enemyTex = new OGLTexture2D("textures/bloodWasp_diffuse.png");
             ammoTex = new OGLTexture2D("textures/ammo.jpg");
             textureCube[0] = new OGLTexture2D("textures/skybox/yellowcloud_ft.jpg");
             textureCube[2] = new OGLTexture2D("textures/skybox/yellowcloud_bk.jpg");
