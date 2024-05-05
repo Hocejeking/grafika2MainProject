@@ -39,7 +39,6 @@ public class Quad {
         this.Iscollidable = IsCollidable;
         rotMat = calculateTheRotationMatrix(this.rotation,this.angleOfRotation);
         this.boundingBox = calcAABB();
-        System.out.println(boundingBox.toString());
     }
 
     public Quad() {
@@ -56,7 +55,6 @@ public class Quad {
 
     private Mat3 calculateTheRotationMatrix(Vec3D rot, int angle){
         float angleRadians = (float) Math.toRadians(angle);
-        System.out.println(rot.toString());
         if(rot.getX() >= 1){
             Mat3RotX rotX = new Mat3RotX(angleRadians);
             Mat3 rotationMatrix = new Mat3(rotX);

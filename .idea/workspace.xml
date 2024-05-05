@@ -1,22 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="grafikaDoomClone:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7825591c-14c9-4d4d-a202-5e2f6f57511e" name="Changes" comment="walls">
-      <change afterPath="$PROJECT_DIR$/src/models/bloodWasp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/textures/BloodWasp_Textures.rar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/textures/bloodWasp_alpha.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/textures/bloodWasp_diffuse.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/textures/bloodWasp_normal.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/textures/bloodWasp_spec.png" afterDir="false" />
+    <list default="true" id="7825591c-14c9-4d4d-a202-5e2f6f57511e" name="Changes" comment="enemy and ammo boxes positions">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/grafikaDoomClone_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/skybox_main.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Windows64DebugSp_bulletjme.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/grafikaDoomClone.iml" beforeDir="false" afterPath="$PROJECT_DIR$/grafikaDoomClone.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLBuffers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLBuffers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLModelOBJ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLModelOBJ.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLRenderTarget.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLRenderTarget.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLTexImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLTexImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLTexImageByte.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLTexImageByte.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLTexImageFloat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLTexImageFloat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLTextRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLTextRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLTexture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLTexture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLTexture2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLTexture2D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLTextureCube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLTextureCube.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLTextureVolume.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLTextureVolume.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/OGLUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/OGLUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/ShaderUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/ShaderUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/ToFloatArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/ToFloatArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/ToIntArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/ToIntArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lwjgl-utils/lwjgl-utils-master/brdf.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwjglutils/brdf.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Bug.obj" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/Bug.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/bloodWasp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/bloodWasp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/swampGhoul.obj" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/swampGhoul.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p01start/App/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/App/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/p01start/App/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/App/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Map/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/p01start/Map/MapFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/MapFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/textures/Request for DS2019 &amp; Declaration of Finances Form 6.2020 (1).pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/textures/Request for DS2019 &amp; Declaration of Finances Form 6.2020.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p01start/Geometry/Quad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Geometry/Quad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p01start/Map/SkyBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Map/SkyBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/p01start/Sound/SoundManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/p01start/Sound/SoundManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sounds/hitSound.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sounds/hitSound.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/hitSound.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sounds/reload.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/reload.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sounds/sound.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/sound.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sounds/step.ogg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/step.ogg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/BloodWasp_Textures.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/ammo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/ammo.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/bloodWasp_alpha.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/bloodWasp_diffuse.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/bloodWasp_diffuse.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/bloodWasp_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/bloodWasp_spec.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/door.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/floor.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/floor.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/globe.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/gun.gif" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/gun.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/pillBug1_additionalHeight.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/pillBug1_diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/pillBug1_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/pillBug1_spec.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/skybox/yellowcloud_bk.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/skybox/yellowcloud_dn.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/skybox/yellowcloud_ft.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/skybox/yellowcloud_lf.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/skybox/yellowcloud_rt.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/skybox/yellowcloud_up.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/swampGhoul_diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/swampGhoul_normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/textures/wall.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/wall.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,14 +107,15 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-20&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;U:/grafika-Projekty/Windows64DebugSp_bulletjme.dll&quot;,
+    &quot;last_opened_file_path&quot;: &quot;A:/grafikaDoomClone/src/assets&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;it.czerwinski.intellij.wavefront.settings.WavefrontObjSettingsConfigurable&quot;,
@@ -75,13 +128,14 @@
       <recent name="A:\grafikaDoomClone\src\textures" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="A:\grafikaDoomClone\src" />
+      <recent name="A:\grafikaDoomClone\assets" />
       <recent name="A:\grafikaDoomClone\src\textures" />
       <recent name="A:\grafikaDoomClone\src\textures\skybox" />
       <recent name="A:\grafikaDoomClone" />
-      <recent name="A:\grafikaDoomClone\src" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="p01start.App.App" />
       <module name="grafikaDoomClone" />
@@ -89,6 +143,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="grafikaDoomClone.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/grafikaDoomClone_jar/grafikaDoomClone.jar" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="JAR Application.grafikaDoomClone.jar" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JAR Application.grafikaDoomClone.jar" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -149,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714828508079</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="enemy and ammo boxes positions">
+      <created>1714911923430</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1714911923430</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,13 +242,16 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="fd" />
     <MESSAGE value="skybox" />
     <MESSAGE value="bullets" />
     <MESSAGE value="Sound" />
     <MESSAGE value="walls" />
-    <option name="LAST_COMMIT_MESSAGE" value="walls" />
+    <MESSAGE value="enemy and ammo boxes positions" />
+    <option name="LAST_COMMIT_MESSAGE" value="enemy and ammo boxes positions" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

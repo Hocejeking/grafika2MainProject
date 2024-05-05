@@ -1,13 +1,6 @@
 package p01start.Sound;
 
-import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.*;
-
-import java.io.FileInputStream;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-import java.nio.channels.FileChannel;
-
 import static org.lwjgl.openal.ALC10.*;
 
 

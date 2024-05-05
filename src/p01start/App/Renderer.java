@@ -57,10 +57,10 @@ public class Renderer extends AbstractRenderer {
     private OGLTexture2D texture;
     private OGLTexture2D gun;
     private OGLTexture2D floor;
-    private OGLTexture2D door;
     private OGLTexture2D enemyTex;
     private OGLTexture2D ammoTex;
     private OGLTexture2D.Viewer textureViewer;
+    private OGLTexture2D skyboxTex;
     private OBJLoader objLoader = new OBJLoader();
     private Obj enemyOBJ = new Obj();
     private Enemy enemy;
@@ -190,12 +190,12 @@ public class Renderer extends AbstractRenderer {
         ammoBoxesList = mapFactory.generateAmmoBoxes();
         try {
             System.out.println("Loading");
-            enemyOBJ = objLoader.loadModel(new File("src/models/bloodWasp.obj"));
+            enemyOBJ = objLoader.loadModel(new File("src/assets/bloodWasp.obj"));
             enemy = new Enemy(enemyOBJ, new Vec3D(0,0,0));
-            shootSound = new Sound("src/sounds/sound.ogg",false);
-            stepSound = new Sound("src/sounds/step.ogg", false);
-            hitSound = new Sound("src/sounds/hitSound.ogg", false);
-            reloadSound = new Sound("src/sounds/reload.ogg", false);
+            shootSound = new Sound("src/assets/sound.ogg",false);
+            stepSound = new Sound("src/assets/step.ogg", false);
+            hitSound = new Sound("src/assets/hitSound.ogg", false);
+            reloadSound = new Sound("src/assets/reload.ogg", false);
         }catch (IOException e){
             System.out.println(e);
         }
@@ -211,20 +211,12 @@ public class Renderer extends AbstractRenderer {
 
         System.out.println("Loading texture...");
         try {
-            OGLTexture2D[] textureCube = new OGLTexture2D[6];
-            texture = new OGLTexture2D("textures/wall.jpg");
-            gun = new OGLTexture2D("textures/gun.gif");
-            floor = new OGLTexture2D("textures/floor.jpg");
-            door = new OGLTexture2D("textures/door.jfif");
-            enemyTex = new OGLTexture2D("textures/bloodWasp_diffuse.png");
-            ammoTex = new OGLTexture2D("textures/ammo.jpg");
-            textureCube[0] = new OGLTexture2D("textures/skybox/yellowcloud_ft.jpg");
-            textureCube[2] = new OGLTexture2D("textures/skybox/yellowcloud_bk.jpg");
-            textureCube[4] = new OGLTexture2D("textures/skybox/yellowcloud_up.jpg");
-            textureCube[5] = new OGLTexture2D("textures/skybox/yellowcloud_dn.jpg");
-            textureCube[3] = new OGLTexture2D("textures/skybox/yellowcloud_rt.jpg");
-            textureCube[1] = new OGLTexture2D("textures/skybox/yellowcloud_lf.jpg");
-            skybox = new SkyBox(textureCube);
+            texture = new OGLTexture2D("assets/wall.jpg");
+            gun = new OGLTexture2D("assets/gun.gif");
+            floor = new OGLTexture2D("assets/floor.jpg");
+            enemyTex = new OGLTexture2D("assets/bloodWasp_diffuse.png");
+            ammoTex = new OGLTexture2D("assets/ammo.jpg");
+            skyboxTex = new OGLTexture2D("assets/skybox_main.png");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -264,31 +256,28 @@ public class Renderer extends AbstractRenderer {
     private void drawSkyBox(){
         glEnable(GL_TEXTURE_2D);
         glActiveTexture(GL_TEXTURE0);
-        skybox.textureCube[1].bind();
+        skyboxTex.bind();
         glBegin(GL_QUADS);
-            glTexCoord2f(0.0f, 1.0f); glVertex3f(-100.0f, -100.0f, -100.0f);
-            glTexCoord2f(0.0f, 0.0f); glVertex3f(-100.0f,  100.0f, -100.0f);
-            glTexCoord2f(1.0f, 0.0f); glVertex3f( 100.0f,  100.0f, -100.0f);
-            glTexCoord2f(1.0f, 1.0f); glVertex3f( 100.0f, -100.0f, -100.0f);
+            glTexCoord2f(1.0f, 0.0f); glVertex3f(-100.0f, -100.0f, -100.0f);
+            glTexCoord2f(1.0f, 1.0f); glVertex3f(-100.0f,  100.0f, -100.0f);
+            glTexCoord2f(0.0f, 1.0f); glVertex3f( 100.0f,  100.0f, -100.0f);
+            glTexCoord2f(0.0f, 0.0f); glVertex3f( 100.0f, -100.0f, -100.0f);
         glEnd();
 
-        skybox.textureCube[3].bind();
         glBegin(GL_QUADS);
-            glTexCoord2f(1.0f, 1.0f); glVertex3f(-100.0f, -100.0f, 100.0f);
-            glTexCoord2f(0.0f, 1.0f); glVertex3f(-100.0f,  100.0f, 100.0f);
-            glTexCoord2f(0.0f, 0.0f); glVertex3f( 100.0f,  100.0f, 100.0f);
-            glTexCoord2f(1.0f, 0.0f); glVertex3f( 100.0f, -100.0f, 100.0f);
+            glTexCoord2f(1.0f, 0.0f); glVertex3f(-100.0f, -100.0f, 100.0f);
+            glTexCoord2f(1.0f, 1.0f); glVertex3f(-100.0f,  100.0f, 100.0f);
+            glTexCoord2f(0.0f, 1.0f); glVertex3f( 100.0f,  100.0f, 100.0f);
+            glTexCoord2f(0.0f, 0.0f); glVertex3f( 100.0f, -100.0f, 100.0f);
         glEnd();
 
-        skybox.textureCube[4].bind();
         glBegin(GL_QUADS);
-            glTexCoord2f(0.0f, 0.0f); glVertex3f(-100.0f, 100.0f, -100.0f);
-            glTexCoord2f(1.0f, 0.0f); glVertex3f(-100.0f, 100.0f,  100.0f);
-            glTexCoord2f(1.0f, 1.0f); glVertex3f( 100.0f, 100.0f,  100.0f);
-            glTexCoord2f(0.0f, 1.0f); glVertex3f( 100.0f, 100.0f, -100.0f);
+            glTexCoord2f(1.0f, 0.0f); glVertex3f(-100.0f, 100.0f, -100.0f);
+            glTexCoord2f(1.0f, 1.0f); glVertex3f(-100.0f, 100.0f,  100.0f);
+            glTexCoord2f(0.0f, 1.0f); glVertex3f( 100.0f, 100.0f,  100.0f);
+            glTexCoord2f(0.0f, 0.0f); glVertex3f( 100.0f, 100.0f, -100.0f);
         glEnd();
 
-        skybox.textureCube[0].bind();
         glBegin(GL_QUADS);
             glTexCoord2f(1.0f, 0.0f); glVertex3f(-100.0f, -100.0f, -100.0f);
             glTexCoord2f(1.0f, 1.0f); glVertex3f(-100.0f, -100.0f,  100.0f);
@@ -296,7 +285,6 @@ public class Renderer extends AbstractRenderer {
             glTexCoord2f(0.0f, 0.0f); glVertex3f( 100.0f, -100.0f, -100.0f);
         glEnd();
 
-        skybox.textureCube[2].bind();
         glBegin(GL_QUADS);
             glTexCoord2f(1.0f, 0.0f); glVertex3f(-100.0f, -100.0f,  100.0f);
             glTexCoord2f(1.0f, 1.0f); glVertex3f(-100.0f,  100.0f,  100.0f);
@@ -304,7 +292,7 @@ public class Renderer extends AbstractRenderer {
             glTexCoord2f(0.0f, 0.0f); glVertex3f(-100.0f, -100.0f, -100.0f);
         glEnd();
 
-        skybox.textureCube[5].bind();
+
         glBegin(GL_QUADS);
             glTexCoord2f(1.0f, 0.0f); glVertex3f(100.0f, -100.0f, -100.0f);
             glTexCoord2f(1.0f, 1.0f); glVertex3f(100.0f,  100.0f, -100.0f);

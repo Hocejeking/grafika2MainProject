@@ -4,7 +4,7 @@ import global.LwjglWindow;
 public class App {
 
 	public static void main(String[] args) {
-		new LwjglWindow(new Renderer(), true);
+		new LwjglWindow(new Renderer(), false);
 	}
 
 }
